@@ -1,0 +1,46 @@
+﻿<h1>Hi {{currentUser.name}}!</h1>
+<h3>Notes:</h3>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Note</th>
+        <th scope="col">Link access</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let note of notes">
+        <th scope="row">{{note.createdAt | date:'dd.mm.yyyy hh:mm:ss'}}</th>
+        <td>{{note.text}}</td>
+        <td *ngIf="!note.linkAccess"><a (click)="setLinkSharing(note.id, true)" class="btn btn-link">Enable</a></td>
+        <td *ngIf="note.linkAccess"><input [value]="generateLink(note.path)" readonly="readonly" matInput/><a (click)="setLinkSharing(note.id, false)" class="btn btn-link">Disable</a></td>
+        
+        <td><a [routerLink]="['update', note.id]" class="btn btn-link">Edit</a></td>
+        <td><a (click)="deleteNote(note.id)" class="btn btn-link">Delete</a></td>
+      </tr>
+
+    </tbody>
+    <tfoot>
+      <div class="card-footer pb-0 pt-3">
+        <ul *ngIf="pages && pages.length" class="pagination">
+          <li [ngClass]="{disabled:pageIndex === 1}" class="page-item first-item">
+              <a (click)="setPage(1)" class="page-link">First</a>
+          </li>
+          <li [ngClass]="{disabled:pageIndex === 1}" class="page-item previous-item">
+              <a (click)="setPage(pageIndex-1)" class="page-link">Previous</a>
+          </li>
+          <li *ngFor="let page of pages" [ngClass]="{active:pageIndex === page}" class="page-item number-item">
+              <a (click)="setPage(page)" class="page-link">{{page}}</a>
+          </li>
+          <li [ngClass]="{disabled:pageIndex === pages.length}" class="page-item next-item">
+              <a (click)="setPage(pageIndex+1)" class="page-link">Next</a>
+          </li>
+          <li [ngClass]="{disabled:pageIndex === pages.length}" class="page-item last-item">
+              <a (click)="setPage(pages.length)" class="page-link">Last</a>
+          </li>
+      </ul>
+    </div>
+    </tfoot>
+  </table>
