@@ -1,0 +1,25 @@
+{
+  "name": "test",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "PORT=8091 /usr/bin/node ./bin/www",
+    "startWin": "node ./bin/www",
+    "init": "curl -X POST http://127.0.0.1:8091/api/register -H 'Content-Type: application/json' -H 'cache-control: no-cache' -d ' {\"name\": \"admin\", \"password\": \"654321\" }'"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "express-jwt": "^5.3.1",
+    "express-ws": "^4.0.0",
+    "http-errors": "~1.6.2",
+    "jsonwebtoken": "^8.4.0",
+    "mysql2": "^2.1.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "sequelize": "^6.2.4"
+  }
+}
