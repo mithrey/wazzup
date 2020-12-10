@@ -21,7 +21,7 @@ export class NoteSharingComponent implements OnInit {
         this.publicService.getNoteText(this.path)
         .pipe(first())
         .subscribe(
-            (data: string) => this.text = data);
+            (res: any) => this.text = res.data);
     }
 
 }

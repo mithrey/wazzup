@@ -37,16 +37,16 @@ module.exports.register = async function (req, res) {
 
     if(!name || !password || !login){
         return sendJsonResponse(res, 400, {
-            code: 1000,
-            "message": "fields 'name', 'login' and 'password' required"
+            status: "error",
+            msg: "fields 'name', 'login' and 'password' required"
         });
     }
 
     let alreadyRegistered = await User.findOne({where:{login:login}});
     if(alreadyRegistered){
         return sendJsonResponse(res, 400, {
-            code: 1006,
-            "message": "login already registered"
+            status: "error",
+            msg: "login already registered"
         });
     }
 
@@ -66,14 +66,15 @@ module.exports.register = async function (req, res) {
                "token": token
             });
         })
-        .catch(err => sendJsonResponse(res, 400, {code: 1005, message:"Registration error"}))
+        .catch(err => sendJsonResponse(res, 400, {status: "error", msg:"Registration error"}))
 
 };
 
 module.exports.login = function (req, res) {
     if(!req.body.login || !req.body.password){
         sendJsonResponse(res, 400, {
-            "message": "fields 'user' and 'password' required"
+            status: "error",
+            msg: "fieldss 'login' and 'password' required"
         });
         return;
     }
@@ -82,10 +83,8 @@ module.exports.login = function (req, res) {
     passport.authenticate('local',{}, function (err, user, info) {
        let token;
 
-       console.log('req', user);
        if(err){
-        console.log('err', err);
-           sendJsonResponse(res, 404, err);
+           sendJsonResponse(res, 404, {status: "error", msg: err});
            return;
        }
 
@@ -94,12 +93,11 @@ module.exports.login = function (req, res) {
            sendJsonResponse(res, 200, {
                token: token,
                name: user.name,
-               balance: user.balance,
                id: user.id,
                login: user.login
            });
        } else {
-           sendJsonResponse(res, 401, info);
+           sendJsonResponse(res, 401, {status: "error", msg: info});
        }
 
     })(req, res);

@@ -3,8 +3,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');;
 const crypto = require('crypto');
 
-var validPassword = function(password, userHash, salt){
-    var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+const validPassword = function(password, userHash, salt){
+    let hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
     return userHash === hash;
 };
 
@@ -18,7 +18,7 @@ passport.use(new LocalStrategy({
                     login : username
                 }
             }).then( user => {
-                console.log('passport USER ', password, user.dataValues.hash, user.dataValues.salt );
+                //console.log('passport USER ', password, user.dataValues.hash, user.dataValues.salt );
                     if(!user){
                         return done(null, false, {
                             code: 1003,

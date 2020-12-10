@@ -24,14 +24,11 @@ app.use(passport.session());
  * HTTP routing -- begin
  */
 
-var authApi = require('./app_api/routes/authentication');
+const authApi = require('./app_api/routes/authentication');
 app.use('/api', authApi);
 
-var noteApi = require('./app_api/routes/note');
+const noteApi = require('./app_api/routes/note');
 app.use('/api', noteApi);
-
-var userApi = require('./app_api/routes/user');
-app.use('/api', userApi);
 
 app.use('/', express.static(path.join(__dirname, 'app_client/dist')));
 app.use('/r/:path', express.static(path.join(__dirname, 'app_client/dist')));

@@ -28,10 +28,10 @@ export class HomeComponent implements OnInit {
     updateNotes(){
         this.noteService.getNotesCount()
         .pipe(first())
-        .subscribe((data : number) => this.pages = Array(Math.ceil(data/this.pageSize)).fill(1).map((x, i) => i + 1) );
+        .subscribe((res : any) => this.pages = Array(Math.ceil(res.data/this.pageSize)).fill(1).map((x, i) => i + 1) );
         this.noteService.getNotes(this.pageSize, this.skip)
         .pipe(first())
-        .subscribe((data : Array<Note>) => this.notes = data);
+        .subscribe((res : any) => this.notes = res.data);
     }
 
     ngOnInit() {
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
         this.noteService.deleteNote(id)
             .pipe(first())
             .subscribe( 
-                data => {
+                res => {
                     this.alertService.success("Note deleted");
                     this.updateNotes();
                 },
@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit {
         this.noteService.setLinkSharing(id, state)
             .pipe(first())
             .subscribe( 
-                data => {
+                res => {
                     this.alertService.success("Success!");
                     this.updateNotes();
                 },

@@ -31,8 +31,8 @@ export class NoteUpdateComponent implements OnInit {
         this.noteService.getNote(this.id)
         .pipe(first())
         .subscribe(
-            (data: Note) => this.noteForm = this.formBuilder.group({
-                text: [data.text, [Validators.required, Validators.max(1000)]]
+            (res: any) => this.noteForm = this.formBuilder.group({
+                text: [res.data.text, [Validators.required, Validators.max(1000)]]
             }),
             error => {
                 this.alertService.error(error);
@@ -55,7 +55,7 @@ export class NoteUpdateComponent implements OnInit {
         this.noteService.update(this.f.text.value, this.id)
         .pipe(first())
         .subscribe( 
-            data => {
+            res => {
                 this.alertService.success("Note updated");
                 this.router.navigate(['/']);
             },

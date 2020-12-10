@@ -47,7 +47,7 @@ export class NoteComponent implements OnInit {
         this.noteService.create(this.f.text.value)
             .pipe(first())
             .subscribe(
-                data => {
+                res => {
                     this.alertService.success('Note created', true);
                     this.router.navigate(['/']);
                 },
