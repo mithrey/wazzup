@@ -42,6 +42,16 @@ module.exports.register = async function (req, res) {
         });
     }
 
+    if(password.length < 6) return sendJsonResponse(res, 400, {
+        status: "error",
+        msg: "password is too short"
+    });
+
+    if(!/^[a-zA-Z0-9]+$/.test(login)) return sendJsonResponse(res, 400, {
+        status: "error",
+        msg: "Login should containt only english letters and numbers"
+    });
+
     let alreadyRegistered = await User.findOne({where:{login:login}});
     if(alreadyRegistered){
         return sendJsonResponse(res, 400, {
